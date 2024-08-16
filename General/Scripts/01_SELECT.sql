@@ -30,6 +30,7 @@ FROM EMPLOYEE;
 SELECT EMP_ID, EMP_NAME, SALARY, HIRE_DATE
 FROM EMPLOYEE;
 
+
 -- EMPLOYEE 테이블에 존재하는 모든 행, 모든 컬럼 조회
 -- * (asterisk) : 모든, 포함을 나타내는 기호
 SELECT * FROM EMPLOYEE;
@@ -55,6 +56,7 @@ FROM DEPARTMENT;
 -- 모든 사원의 이름, 급여, 급여 + 100만 조회
 SELECT EMP_NAME, SALARY, SALARY + 1000000
 FROM EMPLOYEE;
+
 
 -- EMPLOYEE 테이블에서
 -- 모든 사원의 이름, 급여, 연봉(급여 * 12) 조회
@@ -98,6 +100,7 @@ SELECT CURRENT_DATE ,
 	     CURRENT_DATE + 2
 FROM DUAL;
 
+
 /* 알아두면 도움됨!!! */
 -- 현재 시간, 한 시간 후, 1 분 후, 1 초 후 조회
 SELECT CURRENT_DATE ,
@@ -105,6 +108,7 @@ SELECT CURRENT_DATE ,
 			 CURRENT_DATE + 1/24/60,
 			 CURRENT_DATE + 1/24/60/60 * 10
 FROM DUAL;
+
 
 /* 날짜 끼리 연산하기 ( - 만 가능!!) */
 --> 연산 결과는 일 단위 (1 == 1 일)
@@ -116,6 +120,7 @@ SELECT '2024-08-15',
        TO_DATE('2024-08-15', 'YYYY-MM-DD') 
 FROM DUAL;
 
+
 -- 2024 년 12 월 6 일 - 2024 년 8 월 14 일
 -- == 종강까지 남은 일자
 SELECT 
@@ -123,11 +128,13 @@ SELECT
 	- TO_DATE('2024-08-14', 'YYYY-MM-DD') 
 FROM DUAL;
 
+
 -- 점심 시간 - 현재 시간 == 점심까지 남은 시간
 SELECT 
 	(TO_DATE('2024-08-14 12:50', 'YYYY-MM-DD HH24:MI')
 	- CURRENT_DATE) * 24 * 60 * 60
 FROM DUAL;
+
 
 -- CEIL(숫자) : 소수점 올림 처리
 
@@ -163,6 +170,7 @@ SELECT
 	CEIL((CURRENT_DATE - HIRE_DATE) / 365) "N년째 근무중..."
 FROM EMPLOYEE;
 
+
 -- EMPLOYEE 테이블에서
 -- 모든 사원의 사번, 이름, 급여, 연봉(급여 * 12) 조회
 -- 단, 컬럼명은 모두 별칭 사용
@@ -191,6 +199,7 @@ FROM EMPLOYEE;
 SELECT SALARY, '원', 100
 FROM EMPLOYEE;
 
+
 -- 'SALARY' 와 '원' 컬럼을 하나의 컬럼으로 합쳐 '급여'라는 별칭을 부여
 SELECT SALARY || '원' AS 급여
 FROM EMPLOYEE;
@@ -209,9 +218,11 @@ FROM EMPLOYEE;
 SELECT DEPT_CODE
 FROM EMPLOYEE;	-- 23 행 조회
 
+
 -- 사원이 있는 부서의 부서코드 조회
 SELECT DISTINCT DEPT_CODE
 FROM EMPLOYEE;	-- 7 행 조회(중복 조회)
+
 
 -- EMPLOYEE 테이블에 존재하는 직급 코드(JOB_CODE)
 SELECT DISTINCT JOB_CODE 
@@ -247,12 +258,14 @@ SELECT EMP_ID , EMP_NAME , SALARY
 FROM EMPLOYEE
 WHERE SALARY > 4000000;	-- 8행 조회
 
+
 -- EMPLOYEE 테이블에서
 -- 급여가 500 만원 이하인 사원의
 -- 사번, 이름, 급여 조회
 SELECT EMP_ID , EMP_NAME , SALARY 
 FROM EMPLOYEE
 WHERE SALARY <= 5000000;	-- 19행 조회
+
 
 -- EMPLOYEE 테이블에서
 -- 연봉이 5 천만 원 이하인 사원의 
@@ -261,12 +274,13 @@ SELECT EMP_NAME , SALARY * 12 연봉
 FROM EMPLOYEE
 WHERE SALARY * 12 <= 50000000;	-- 15행 조회
 
+
 -- 이름이 '노옹철' 인 사원의 
 -- 사번, 이름, 전화 번호 조회
-
 SELECT EMP_ID , EMP_NAME , PHONE 
 FROM EMPLOYEE
 WHERE EMP_NAME = '노옹철';	-- 같다(=, 등호 1 개 !!)
+
 
 -- 부서코드(DEPT_CODE)가 'D9' 가 아닌 사람의 
 -- 이름, 부서코드 조회
@@ -299,6 +313,7 @@ FROM EMPLOYEE
 -- WHERE DEPT_CODE != NULL;	-- 결과 없음(잘못된 연산)
 WHERE DEPT_CODE IS NULL;	
 
+
 -- EMPLOYEE 테이블에서
 -- BONUS 컬럼에 값이 있는 사원 조회
 SELECT EMP_NAME , BONUS 
@@ -323,6 +338,7 @@ FROM EMPLOYEE
 WHERE DEPT_CODE = 'D6' 
   AND SALARY > 4000000; -- 2 행
   
+  
 -- EMPLOYEE 테이블에서 
 -- 급여가 300 만 이상 500 만 미만인 사원의
 -- 사번, 이름, 급여 조회
@@ -331,6 +347,7 @@ FROM EMPLOYEE
 WHERE SALARY >= 3000000 
   AND SALARY <  5000000;	-- 16 행
 
+  
 -- EMPLOYEE 테이블에서 
 -- 급여가 300 만 미만 또는 500 만 이상인 사원의
 -- 사번, 이름, 급여 조회
@@ -353,6 +370,7 @@ FROM EMPLOYEE
 WHERE SALARY >= 4000000
   AND SALARY <= 6000000;
 
+ 
 -- 2) BETWEEN 버전
 SELECT EMP_NAME , SALARY 
 FROM EMPLOYEE
@@ -366,6 +384,7 @@ SELECT EMP_NAME , SALARY
 FROM EMPLOYEE
 WHERE SALARY NOT BETWEEN 4000000 AND 6000000; -- 17 행
 
+
 /* 날짜도 범위 비교 가능!!*/
 -- EMPLOYEE 테이블에서
 -- 2010 년대(10.1.1 ~ 19.12.11) 입사한 사원의 
@@ -375,6 +394,7 @@ FROM EMPLOYEE
 WHERE HIRE_DATE >= TO_DATE('2010-01-01', 'YYYY-MM-DD')
 	AND HIRE_DATE <= TO_DATE('2019-12-31', 'YYYY-MM-DD'); -- 10 행
 
+	
 SELECT EMP_ID , EMP_NAME , HIRE_DATE 
 FROM EMPLOYEE
 WHERE HIRE_DATE BETWEEN TO_DATE('2010-01-01', 'YYYY-MM-DD') 
@@ -412,20 +432,224 @@ FROM EMPLOYEE
 WHERE DEPT_CODE NOT IN ('D5', 'D6', 'D9')  -- 9  행(NULL 미포함) 조회 
    OR DEPT_CODE IS NULL;									 -- 11 행 조회
 
+----------------------------------------------------------   
+/* ***** LIKE(같은, 비슷한) *****
+ * 
+ * - 비교하려는 값이 특정한 패턴을 만족시키면 조회하는 연산자
+ * 
+ * [작성법]
+ * 
+ * WHERE 컬럼명 LIKE '패턴'	(홑따옴표는 문자열)
+ * 
+ * - LIKE 에 사용되는 패턴 (와일드 카드)
+ * 
+ * '%' (포함)
+ * - '%A'  : 문자열 앞부분은 어떤 문자든 포함할 수 있지만 
+ * 			    마지막은 A 로 끝나는 문자열
+ * 
+ * - 'A%'  : A 로 시작하는 문자열
+ * 
+ * - '%A%' : A 가 포함된 문자열 (위치 무관)
+ * 
+ * 
+ * '_' (글자 수)
+ * - 'A___' : A 로 시작하고 뒤에 3 글자만 있는 문자열
+ * 					  EX) ABCS(O), ABCDE(X)
+ * 
+ * - '___A' : 앞에 3 글자만 있고 A 로 끝나는 문자열
+ * */
+   
+-- EMPLOYEE 테이블에서 성이 '전' 씨인 사람의 
+-- 사번, 이름 조회
+SELECT EMP_ID, EMP_NAME
+FROM EMPLOYEE
+WHERE EMP_NAME LIKE '전%';	-- 2 행 조회
 
 
+-- EMPLOYEE 테이블에서 이름이 '수' 로 끝나는 사람의
+-- 사번, 이름 조회
+SELECT EMP_ID, EMP_NAME
+FROM EMPLOYEE
+WHERE EMP_NAME LIKE '%수';	-- 1 행 조회
 
 
+-- EMPLOYEE 테이블에서 이름에 '하' 가 포함된 사람의
+-- 사번, 이름 조회
+SELECT EMP_ID, EMP_NAME
+FROM EMPLOYEE
+WHERE EMP_NAME LIKE '%하%';	-- 4 행 조회
 
 
+-- EMPLOYEE 테이블에서
+-- 전화번호가 '010' 으로 시작하는 사원의
+-- 이름, 전화번호 조회
+SELECT EMP_NAME, PHONE
+FROM EMPLOYEE
+-- WHERE PHONE LIKE '010%';	-- 17 행 
+WHERE PHONE LIKE '010________';	-- 17 행 
 
 
+-- EMPLOYEE 테이블에서 
+-- EMAIL 의 아이디 글자 수가 5 글자인 사원의 
+-- 사번, 이름, 이메일 조회
+SELECT EMP_ID, EMP_NAME, EMAIL
+FROM EMPLOYEE
+WHERE EMAIL LIKE '_____@%'; -- 4 행 조회 
+-- (앞 글자 5, 뒤에 몇글자가 올줄 모르기 때문에 %)
 
 
+-- EMPLOYEE 테이블에서 
+-- EMAIL 의 아이디 중 '_' 앞 쪽 글자 수가 3 글자인 사원의
+-- 사번, 이름, 이메일 조회
+SELECT EMP_ID, EMP_NAME, EMAIL
+FROM EMPLOYEE
+WHERE EMAIL LIKE '____%'; 
+/* '_' 와일드 카드 사용 시 문제점
+	
+	- 작성되는 문자열의 '_' 기호가 LIKE '_' 와일드 카드롸
+		똑같이 인식돼서 구분이 안되는 문제가 발생!!
+		
+	[해결 방법]
+	- LIKE 의 ESCAPE OPTION 사용
+	
+	ESCAPE OPTION : 와일드 카드가 아닌 단순 문자열로 인식
+	-> 지정된 특수문자(아무거나) 뒤 "한 글자" 에만 적용된다!
+
+	EX) WHERE 컬럼명 LIKE '__#_' ESCAPE '#'
+	-> # 뒤에 '_' 는 일반 문자열로 인식된다!!
+*/
+SELECT EMP_ID, EMP_NAME, EMAIL
+FROM EMPLOYEE
+WHERE EMAIL LIKE '___#_%' ESCAPE '#'; -- 12 행 조회 
+
+-----------------------------------------------------------------
+/* ***** ORDER BY 절 *****
+ * 
+ * - SELECT 조회 결과 집합 (RESULT SET)
+ * 	 원하는 순서로 정렬할 때 사용하는 구문 
+ * 
+ * [작성법]
+ * 3. SELECT 컬럼명...      (특정 컬럼만 선택해서 출력)
+ * 1. FROM 테이블명  				(어떤 테이블에서)
+ * 2. WHERE 조건식					(조건을 만족하는 행만 선택)
+ * 4.	ORDER BY							(조회된 결과를 정렬)
+ * 		컬럼명 | 별칭 | 컬럼순서(숫자)
+ * 		[ASC / DESC] (오름차순 / 내림차순)
+ * 		[NULLS FIRST / NULLS LAST] (NULL 위치 지정)
+ * 
+ * *** ORDER BY 절은 무조건 SELECT 마지막에 수행된다!!!
+ * */
+
+-- 오름차순(ASCENDING)  : 점점 커지는 순서
+-- EX) 1 -> 10 / 가 -> 하 / A -> Z / 과거 -> 미래
+
+-- 내림차순(DESCENDING) : 점점 작아지는 순서
+
+-- EMPLOYEE 테이블에 존재하는 모든 사원을
+-- 이름 오름차순으로 조회
+SELECT EMP_NAME
+FROM EMPLOYEE
+ORDER BY EMP_NAME ASC;
 
 
+-- EMPLOYEE 테이블에 존재하는 모든 사원의
+-- 이름, 급여를 급여 내림차순으로 조회
+SELECT EMP_NAME, SALARY
+FROM EMPLOYEE
+ORDER BY SALARY DESC;
 
 
+-- EMPLOYEE 테이블에서
+-- 부서코드가 'D5', 'D6', 'D9' 인 사원의
+-- 사번, 이름, 부서코드를
+-- 부서코드 오름차순으로 조회
+SELECT EMP_ID, EMP_NAME, DEPT_CODE
+FROM EMPLOYEE
+WHERE DEPT_CODE IN ('D5', 'D6', 'D9')
+ORDER BY DEPT_CODE ASC;		-- 12 행 조회
+
+
+/* 컬럼 순서를 이용해서 정렬 */
+-- 급여가 400 만 이상, 600만 이하인 사원의 
+-- 사번, 이름, 급여를 급여 내림차순으로 조회
+SELECT EMP_ID, EMP_NAME, SALARY
+FROM EMPLOYEE
+WHERE SALARY BETWEEN 4000000 AND 6000000
+--ORDER BY SALARY DESC;
+ORDER BY 3 DESC;	
+--> 먼저 해석된 SELECT 절에 작성된 컬럼 순서를 이용해
+--	정렬 기준이 될 컬럼을 지정할 수 있다
+
+
+/* 별칭을 이용해서 정렬 */
+-- EMPLOYEE 테이블에서 
+-- 직급 코드가 'J4', 'J5', 'J6' 인 사원을
+-- 사번, 이름, 직급 코드 조회 하기
+-- 단, 이름 오름차순으로 조회
+SELECT EMP_ID 사번,
+			 EMP_NAME 이름,
+			 JOB_CODE "직급 코드"
+FROM EMPLOYEE
+WHERE JOB_CODE IN ('J4', 'J5', 'J6')
+ORDER BY 이름 ASC;
+-- 해석 순서에 따라 ORDER BY 가 마지막에 해석되기에 가능함
+-- WHERE 절에 별칭을 사용하는건 불가능 SELECT 절 보다 먼저 해석되기 때문!!!
+-- (별칭은 SELECT 절이 해석되어야 등록!!)
+
+
+/* ORDER BY 절에 수식 적용 */
+-- 모든 사원의 이름, 연봉을
+-- 연봉 내림차순으로 조회
+SELECT EMP_NAME, SALARY * 12 "연봉"
+FROM EMPLOYEE
+ORDER BY 연봉 * 12 DESC;
+
+
+/* SELECT 절에 작성되지 않은 컬럼을 이용해서 정렬하기 */
+-- 모든 사원의 사번, 이름을
+-- 부서코드 오름차순으로 조회
+SELECT EMP_ID, EMP_NAME /* DEPT_CODE */
+FROM EMPLOYEE
+ORDER BY DEPT_CODE ASC;
+-- SELECT 절에 DEPT_CODE 컬럼이 작성되지 않아도
+-- FROM 절에서 전체 EMPLOYEE 테이블을 불러오기 때문에
+-- DEPT_CODE 컬럼에 대한 정보가 남아있음 --> 정렬 가능!!
+
+
+/* NULLS FIRST / NULLS LAST  확인 */
+
+/* 오름차순 - NULLS LAST 기본값  */
+SELECT EMP_ID, EMP_NAME, DEPT_CODE
+FROM EMPLOYEE
+ORDER BY DEPT_CODE ASC NULLS FIRST;
+
+/* 내림차순 - NULLS FIRST 기본값 */
+SELECT EMP_ID, EMP_NAME, DEPT_CODE
+FROM EMPLOYEE
+ORDER BY DEPT_CODE DESC NULLS LAST;
+
+
+/* 정렬 기준 "중첩" 작성 */
+-- 먼저 작성된 큰 그룹부터 정렬하고
+-- 큰 그룹의 정렬이 깨지지 않는 선에서
+-- 이후 작성된 작은 그룹을 정렬
+
+-- EMPLOYEE 테이블에서
+-- 이름, 부서 코드, 급여를
+-- 부서코드 오름차순, 급여 내림차순 으로 정렬
+	--> 같은 부서코드끼리 모아 놓고
+	--  그 안에서 급여 내림차순 정렬
+SELECT EMP_NAME, DEPT_CODE, SALARY
+FROM EMPLOYEE
+ORDER BY DEPT_CODE ASC, SALARY DESC;
+
+
+-- EMPLOYEE 테이블에서
+-- 이름, 부서 코드, 직급코드를
+-- 부서코드 오름차순, 직급코드 내림차순, 이름 오름차순 으로 정렬
+SELECT EMP_NAME 이름, DEPT_CODE 부서코드, JOB_CODE 직급코드
+FROM EMPLOYEE
+ORDER BY 부서코드 ASC, 직급코드 DESC, 이름 ASC;
 
 
 
