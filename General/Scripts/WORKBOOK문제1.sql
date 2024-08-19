@@ -126,7 +126,7 @@ WHERE SUBSTR(PROFESSOR_SSN, 8, 1) = '1';
 -- 4번
 -- 교수들의 이름 중 성을 제외한 이름만 조회하시오. 출력 헤더는 "이름"이 찍히도록 한다.
 -- (성이 2자인 경우의 교수는 없다고 가정)
-SELECT SUBSTR(PROFESSOR_NAME, 2, 2)
+SELECT SUBSTR(PROFESSOR_NAME, 2, 2) 이름
 FROM TB_PROFESSOR;
 
 
@@ -166,7 +166,7 @@ WHERE STUDENT_NO NOT LIKE 'A%';
 -- 학번이 A517178인 한아름 학생의 학점 총 평점을 구하는 SQL문을 작성하시오.
 -- 단, 이때 출력 화면의 헤더는 "평점"이라고 찍히게 하고, 
 -- 점수는 반올림하여 소수점 이하 한자리까지만 표시한다.
-SELECT ROUND(AVG(POINT), 1)
+SELECT ROUND(AVG(POINT), 1) 평점
 FROM TB_GRADE
 WHERE STUDENT_NO = 'A517178';
 
@@ -174,6 +174,12 @@ WHERE STUDENT_NO = 'A517178';
 
 -- 8번
 -- 학과별 학생 수를 구하여 "학과번호", "학생수(명)"의 형태로 조회하시오
+SELECT 
+	DEPARTMENT_NO "학과번호",
+	COUNT(*)	"학생수(명)"
+FROM TB_STUDENT
+GROUP BY DEPARTMENT_NO
+ORDER BY DEPARTMENT_NO ASC;
 
 -- 9번
 -- 지도 교수를 배정받지 못한 학생의 수를 조회하시오
@@ -185,18 +191,118 @@ WHERE COACH_PROFESSOR_NO IS NULL;
 -- 학번이 A112113인 김고운 학생의 년도 별 평점을 구하는 SQL문을 작성하시오.
 -- 단, 이때 출력화면의 헤더는 "년도", "년도 별 평점"이라고 찍히게 하고, 
 -- 점수는 반올림하여 소수점 이하 한자리까지만 표시한다.
+SELECT 
+	SUBSTR(TERM_NO, 1, 4) "년도",
+	ROUND(AVG(POINT), 1) "년도 별 평점"
+FROM TB_GRADE
+WHERE STUDENT_NO = 'A112113'
+GROUP BY SUBSTR(TERM_NO, 1, 4)
+ORDER BY SUBSTR(TERM_NO, 1, 4) ASC;
 
 -- 11번
 -- 학과 별 휴학생 수를 파악하고자 한다. 
 -- 학과 번호와 휴학생 수를 조회하는 SQL을 작성하시오.
+SELECT DEPARTMENT_NO, COUNT(*)
+FROM TB_STUDENT
+WHERE ABSENCE_YN = 'Y'
+GROUP BY DEPARTMENT_NO
+ORDER BY DEPARTMENT_NO ASC;
+
 
 -- 12번
 -- 춘 대학교에 다니는 동명이인인 학생들의 이름, 동명인 수를 조회하시오.
+SELECT 
+	STUDENT_NAME "동일이름",
+	COUNT(STUDENT_NAME) "동명인 수"
+FROM TB_STUDENT 
+GROUP BY STUDENT_NAME
+HAVING COUNT(STUDENT_NAME) != 1
+ORDER BY STUDENT_NAME ASC;
+
+
 
 -- 13번
 -- 학번이 A112113인 김고운 학생의 학점을 조회하려고 한다.
 -- 년도, 학기 별 평점과 년도 별 누적 평점, 총 평점을 구하는 SQL을 작성하시오.
 -- (단, 평점은 소수점 1자리까지만 반올림하여 표시한다.)
+SELECT 
+	NVL(SUBSTR(TERM_NO, 1, 4), ' ') "년도",
+	NVL(SUBSTR(TERM_NO, 5, 6), ' ') "학기",
+	ROUND(AVG(POINT), 1) 						"평점"
+FROM TB_GRADE
+WHERE STUDENT_NO = 'A112113' 
+GROUP BY ROLLUP (SUBSTR(TERM_NO, 1, 4), SUBSTR(TERM_NO, 5, 6))
+ORDER BY SUBSTR(TERM_NO, 1, 4) ASC;
+
+
+------------------------------------------------------------------------------------------------------
+
+-- 1번
+-- 학생이름과 주소지를 조회하시오
+-- 단, 출력 헤더는 "학생 이름", "주소지"로 하고, 정렬은 이름으로 오름차순 정렬
+
+SELECT 
+	STUDENT_NAME "학생 이름",
+	STUDENT_ADDRESS "주소지"
+FROM TB_STUDENT
+ORDER BY STUDENT_NAME ASC;
+
+-- 2번
+-- 휴학중인 학생들의 이름과 주민번호를 나이가 적은 순서 조회하시오
+SELECT STUDENT_NAME, STUDENT_SSN
+FROM TB_STUDENT
+WHERE ABSENCE_YN = 'Y'
+ORDER BY TO_DATE(SUBSTR(STUDENT_SSN, 1, 6), 'RRMMDD') DESC;
+
+-- 3번
+-- 주소지가 강원도나 경기도인 학생들 중 1900년대 학번을 가진 학생들의
+-- 이름과 학번, 주소를 이름 오름차순으로 조회하시오.
+-- 단, 출력헤더에는 "학생이름", "학번", "거주지 주소"가 출력되도록 한다.
+SELECT
+	STUDENT_NAME "학생이름",
+	STUDENT_NO "학번",
+	STUDENT_ADDRESS "거주지 주소"
+FROM TB_STUDENT
+WHERE 
+	(STUDENT_ADDRESS LIKE '경기%' 
+	OR STUDENT_ADDRESS LIKE '강원%')
+	AND STUDENT_NO NOT LIKE 'A%'
+ORDER BY STUDENT_NAME ASC;
+
+
+-- 4번
+-- 현재 법학과 교수의 이름, 주민등록 번호를 나이가 많은 순서부터 조회하시오.
+SELECT PROFESSOR_NAME, PROFESSOR_SSN
+FROM TB_PROFESSOR
+WHERE DEPARTMENT_NO = '005'
+ORDER BY PROFESSOR_SSN ASC;
+
+
+-- 5번
+-- 2004년 2학기에 'C3118100' 과목을 수강한 학생들의 학점을 조회하려고 한다. 
+-- 학점이 높은 학생부터 표시하고, 학점이 같으면 학번이 낮은 학생부터 조회하시오.
+-- (참고) 소수점 아래 2자리까지 0으로 표현 : TO_CHAR(NUMBER, 'FM9.00')
+-- (FM : 조회 결과 양쪽 공백 제거)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
