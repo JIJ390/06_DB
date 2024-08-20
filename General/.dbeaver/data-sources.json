@@ -97,7 +97,14 @@
 					"@dbeaver-sid-service@": "SERVICE"
 				},
 				"auth-model": "oracle_native"
-			}
+			},
+			"filters": [
+				{
+					"type": "org.jkiss.dbeaver.ext.oracle.model.OracleSchema",
+					"enabled": true,
+					"include": ["TEST_USER"]
+				}
+			]
 		}
 	},
 	"connection-types": {
