@@ -165,7 +165,7 @@ FROM EMPLOYEE;
 SELECT 
 	EMP_ID AS 사번,														-- 컬럼명 AS 별칭
 	EMP_NAME 이름,														-- 컬럼명 별칭 (AS 생략)
-	HIRE_DATE AS "입사한 날짜",									-- 컬럼명 AS "별칭" 
+	HIRE_DATE AS "입사한 날짜",								-- 컬럼명 AS "별칭" 
 	CURRENT_DATE - HIRE_DATE "#근무 일수#",		-- 컬럼명 "별칭"
 	CEIL((CURRENT_DATE - HIRE_DATE) / 365) "N년째 근무중..."
 FROM EMPLOYEE;
@@ -506,7 +506,7 @@ FROM EMPLOYEE
 WHERE EMAIL LIKE '____%'; 
 /* '_' 와일드 카드 사용 시 문제점
 	
-	- 작성되는 문자열의 '_' 기호가 LIKE '_' 와일드 카드롸
+	- 작성되는 문자열의 '_' 기호가 LIKE '_' 와일드 카드와
 		똑같이 인식돼서 구분이 안되는 문제가 발생!!
 		
 	[해결 방법]
