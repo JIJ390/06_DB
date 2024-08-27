@@ -333,6 +333,9 @@ SELECT * FROM USER_USED_UK2;
 -- 한 개 컬럼에 설정할 수도 있고, 여러개의 컬럼을 묶어서 설정할 수 있음
 		--> (복합키 가능)
 
+--   * 실제 (NOT NULL + UNIQUE) 과 비교 시
+--	 	 보이는 효과는 같지만 (NOT NULL + UNIQUE)은 식별자 역할을 할 수 없음
+
 
 CREATE TABLE USER_USED_PK(
     USER_NO NUMBER CONSTRAINT USER_NO_PK PRIMARY KEY,	-- 컬럼레벨 설정
@@ -415,7 +418,9 @@ VALUES(NULL, 'user01', 'pass01', '신사임당', '여', '010-9999-9999', 'sin123
 
 -- * 참조될 수 있는 컬럼은 PRIMARY KEY컬럼과
 --   UNIQUE 지정된 컬럼만 외래키로 사용할 수 있음
--- 참조할 테이블의 참조할 컬럼명이 생략이 되면, PRIMARY KEY로 설정된 컬럼이 자동 참조할 컬럼이 됨
+
+-- * 참조할 테이블의 참조할 컬럼명이 생략이 되면
+--   PRIMARY KEY로 설정된 컬럼이 자동 참조할 컬럼이 됨
 
 CREATE TABLE USER_GRADE(
   GRADE_CODE NUMBER PRIMARY KEY,
@@ -511,6 +516,9 @@ SELECT * FROM USER_GRADE; -- 삭제 확인
 DELETE
 FROM USER_GRADE
 WHERE GRADE_CODE = 10;
+
+
+
 
 -- 2) ON DELETE SET NULL : 부모키 삭제시 자식키를 NULL로 변경하는 옵션
 CREATE TABLE USER_GRADE2(
@@ -626,8 +634,8 @@ SELECT * FROM USER_GRADE3;
 SELECT * FROM USER_USED_FK3;
 
 
--- 부모 테이블인 USER_GRADE3에서 GRADE_COE =10 삭제
---> ON DELETE CASECADE 옵션이 설정되어 있어 오류없이 삭제됨.
+-- 부모 테이블인 USER_GRADE3에서 GRADE_CODE = 10 삭제
+--> ON DELETE CASCADE 옵션이 설정되어 있어 오류없이 삭제됨.
 DELETE
 FROM USER_GRADE3
 WHERE GRADE_CODE = 10;
@@ -699,10 +707,10 @@ CREATE TABLE USER_TEST(
 		-- NOT NULL은 컬럼 레벨만 가능!
 		CONSTRAINT NN_USER_PWD NOT NULL, 
 		
-	PNO			CHAR(14)
+	PNO				CHAR(14)
 		CONSTRAINT NN_PNO NOT NULL ,
 	GENDER		CHAR(3),
-	PHONE		CHAR(13),
+	PHONE			CHAR(13),
 	ADDRESS		VARCHAR2(300),
 	STATUS		CHAR(1)
 		CONSTRAINT NN_STATUS NOT NULL,
@@ -710,7 +718,7 @@ CREATE TABLE USER_TEST(
 	-- 테이블 레벨
 	CONSTRAINT PK_USER_TEST PRIMARY KEY(USER_NO), -- PK
 	CONSTRAINT UK_USER_ID   UNIQUE(USER_ID),
-	CONSTRAINT UK_PNO		UNIQUE(PNO),
+	CONSTRAINT UK_PNO				UNIQUE(PNO),
 	CONSTRAINT CK_GENDER    CHECK(GENDER IN ('남', '여')),
 	CONSTRAINT CK_STATUS    CHECK(STATUS IN ('Y', 'N'))
 );
