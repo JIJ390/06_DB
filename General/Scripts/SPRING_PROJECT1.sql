@@ -1,19 +1,18 @@
 /* 관리자 계정 (sys) 접속 후 수행*/
 
-/*
-ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+--ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+--
+---- 계정 생성
+--CREATE USER SPRING_JIJ IDENTIFIED BY SPRING1234; 
+--
+---- 권한 부여
+--GRANT CONNECT, RESOURCE TO SPRING_JIJ;
+--
+---- 테이블 저장 공간 할당
+--ALTER USER SPRING_JIJ
+--DEFAULT TABLESPACE USERS
+--QUOTA 100M ON USERS;
 
--- 계정 생성
-CREATE USER SPRING_JIJ IDENTIFIED BY SPRING1234; 
-
--- 권한 부여
-GRANT CONNECT, RESOURCE TO SPRING_JIJ;
-
--- 테이블 저장 공간 할당
-ALTER USER SPRING_JIJ
-DEFAULT TABLESPACE USERS
-QUOTA 100M ON USERS;
-*/
 
 
 ----------------------------------------------------------------------------
