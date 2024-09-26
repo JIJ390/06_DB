@@ -129,11 +129,28 @@ WHERE MEMBER_NO = 7;
 COMMIT;
 
 
+-- 파일 업로드 테스트용 테이블
+CREATE TABLE TB_FILE_TEST(
+	FILE_NO            NUMBER PRIMARY KEY,				-- 원본 파일명
+	FILE_ORIGINAL_NAME VARCHAR2(300),							-- 원본 파일명
+	FILE_RENAME        VARCHAR2(300),							-- 변경된 파일명
+	FILE_PATH          VARCHAR2(300),							-- 파일이 저장된 폴더명
+	UPLOAD_DATE        DATE DEFAULT CURRENT_DATE	-- 저장된 날짜
+);
 
+CREATE SEQUENCE SEQ_FILE_NO NOCACHE; -- 시퀀스 생성
 
+SELECT * FROM TB_FILE_TEST;
 
+DELETE TB_FILE_TEST
+WHERE FILE_NO = 5;
 
+UPDATE TB_FILE_TEST
+SET FILE_PATH = '/images/test/';
 
+DROP TABLE TB_FILE_TEST;
+
+ROLLBACK;
 
 
 
