@@ -131,9 +131,9 @@ COMMIT;
 
 -- 파일 업로드 테스트용 테이블
 CREATE TABLE TB_FILE_TEST(
-	FILE_NO            NUMBER PRIMARY KEY,				-- 원본 파일명
-	FILE_ORIGINAL_NAME VARCHAR2(300),							-- 원본 파일명
-	FILE_RENAME        VARCHAR2(300),							-- 변경된 파일명
+	FILE_NO            NUMBER PRIMARY KEY,				
+	FILE_ORIGINAL_NAME VARCHAR2(300),							-- 원본 파일명		// 필요에 따라
+	FILE_RENAME        VARCHAR2(300),							-- 변경된 파일명	// 필수!!!
 	FILE_PATH          VARCHAR2(300),							-- 파일이 저장된 폴더명
 	UPLOAD_DATE        DATE DEFAULT CURRENT_DATE	-- 저장된 날짜
 );
