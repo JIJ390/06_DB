@@ -190,7 +190,7 @@ CREATE TABLE "BOARD_IMG" (
 	"BOARD_NO"	NUMBER		NOT NULL
 );
 
-COMMENT ON COLUMN "BOARD_IMG"."IMG_NO" IS '이미지 번호(SEQ_IMG_NO)';
+COMMENT ON COLUMN "BOARD_IMG"."IMG_NO" IS '이미지 번호(insertUploadList)';
 COMMENT ON COLUMN "BOARD_IMG"."IMG_PATH" IS '이미지 요청 경로';
 COMMENT ON COLUMN "BOARD_IMG"."IMG_ORIGINAL_NAME" IS '이미지 원본명';
 COMMENT ON COLUMN "BOARD_IMG"."IMG_RENAME" IS '이미지 변경병';
@@ -464,7 +464,7 @@ JOIN
 WHERE
 	BOARD_DEL_FL = 'N' -- 삭제 안된 글 
 AND 
-	BOARD_CODE = 1		 -- 게시판 종류
+	BOARD_CODE = 2		 -- 게시판 종류
 ORDER BY
 	RNUM DESC;
 
@@ -489,13 +489,76 @@ VALUES(
 	1
 );
 
+SELECT * FROM "BOARD";
 
 
 
 
 
+-----------------------------------------------------------------
+-- 이미지 번호 생성용 시퀀스 
+CREATE SEQUENCE SEQ_IMG_NO NOCACHE;
+
+/* 여러 행을 한 번에 INSERT 하는 방법 
+ * 
+ * 1. INSERT ALL 구문
+ * 2. INSERT + SUBQUERY (사용!)
+ * 
+ * [문제점] 위에 두 방법 다 SEQUENCE를 직접 사용 불가!!
+ * 함수를 생성 후 우회해서 사용
+ * 
+ * SEQ_IMG_NO 를 SUBQUERY 에 바로 사용할 수 없음
+ * */
+
+SELECT
+	SEQ_IMG_NO.NEXTVAL,
+	'/images/board',
+	'원본명',
+	'변경명',
+	1,
+	2000
+FROM DUAL;
+
+-- SEQ_IMG_NO 시퀀스의 다음 값을 반환하는 함수 생성
+CREATE OR REPLACE FUNCTION NEXT_IMG_NO
+
+-- 반환형
+RETURN NUMBER
+
+-- 사용할 변수
+IS IMG_NO NUMBER;
+
+BEGIN 
+	SELECT SEQ_IMG_NO.NEXTVAL 
+	INTO IMG_NO
+	FROM DUAL;
+
+	RETURN IMG_NO;
+END;
 
 
+
+INSERT INTO "BOARD_IMG"
+(
+	SELECT
+		NEXT_IMG_NO(),
+		'/images/board/', '원본명','변경명',1,2000
+	FROM DUAL
+	
+	UNION ALL
+	
+	SELECT
+		NEXT_IMG_NO(),
+		'/images/board/', '원본명','변경명',1,2000
+	FROM DUAL
+
+);
+
+ROLLBACK;
+
+
+SELECT *
+FROM BOARD_IMG;
 
 
 
