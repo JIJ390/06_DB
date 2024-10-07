@@ -1,1 +1,1 @@
-{"resources":{"Scripts/SPRING_PROJECT1.sql":{"default-schema":"SPRING_JIJ","default-datasource":"oracle_thin-191de79f407-28bfd6b878548eaa"},"Scripts/test0930.sql":{"default-datasource":"oracle_thin-1914e877b31-7a3246a37509108b","default-schema":"KH_JIJ"}}}
+{"resources":{"Scripts/SPRING_PROJECT1.sql":{"default-schema":"SPRING_JIJ","default-datasource":"oracle_thin-191de79f407-28bfd6b878548eaa"},"Scripts/test0930.sql":{"default-schema":"KH_JIJ","default-datasource":"oracle_thin-1914e877b31-7a3246a37509108b"}}}
