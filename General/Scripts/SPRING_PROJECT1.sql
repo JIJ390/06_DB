@@ -687,28 +687,27 @@ ORDER SIBLINGS BY COMMENT_NO
 ;
 
 
-
-
-
 COMMIT;
 
+SELECT COUNT(*)
+FROM "BOARD_LIKE";
 
 
+SELECT 
+	BOARD_CODE "boardCode",
+	BOARD_NAME "boardName"		
+FROM
+	"BOARD_TYPE"
+ORDER BY BOARD_CODE ASC;
 
+	
+INSERT INTO "BOARD_TYPE"
+VALUES(4, '테스트');
 
+SELECT *
+FROM BOARD_TYPE;
 
-
-
-
-
-
-
-
-
-
-
-
-
+COMMIT;
 
 
 

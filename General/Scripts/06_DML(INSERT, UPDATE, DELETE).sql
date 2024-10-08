@@ -1,15 +1,15 @@
 --- *** DML(Data Manipulation Language) : 데이터 조작 언어
-
 -- 테이블에 값을 삽입하거나(INSERT), 수정하거나(UPDATE), 삭제(DELETE)하는 구문
 -- SELECT 도 DML 에 포함되긴 하지만 DQL 이라는 것으로 분리해서 보기도 한다
 --> DQL(Data Query Language : 데이터 질의 언어)
-
 -- 작성법 중요 !!!!
-
 -- 주의 : 혼자서 COMMIT, ROLLBACK 하지 말것!
-
 -- 테스트용 테이블 생성
-CREATE TABLE EMPLOYEE2 AS SELECT * FROM EMPLOYEE;
+CREATE TABLE EMPLOYEE2 AS
+SELECT
+	*
+FROM
+	EMPLOYEE;
 CREATE TABLE DEPARTMENT2 AS SELECT * FROM DEPARTMENT;
 -- 테이블 복제 구문!!
 
