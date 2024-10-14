@@ -714,11 +714,30 @@ FROM "BOARD"
 WHERE BOARD_NO = 2026;
 
 
+----------------------
 
+/* 검색 조건이 일치하는 게시글 수 조회 */
+SELECT COUNT(*)
+FROM "BOARD"
+JOIN "MEMBER" USING("MEMBER_NO")
+WHERE BOARD_CODE = 1
+AND BOARD_DEL_FL = 'N';
 
+-- 제목 검색인 경우 11 이 포함된 경우
+--AND BOARD_TITLE LIKE  '%' || '11' || '%';
 
+-- 내용 검색인 셩우 
+--AND BOARD_CONTENT LIKE '%' || '11' || '%';
 
+-- 제목, 내용 둘 다 AND 연산이 우선이기 때문에 
+-- 괄호 없을 시 OR 뒤 내용에는 BOARD_CODE 조건이 붙지 않음
+--AND (
+--	BOARD_CONTENT LIKE '%' || '11' || '%'
+--OR
+--	BOARD_TITLE LIKE  '%' || '11' || '%');
 
+-- 작성자 검색
+--AND MEMBER_NICKNAME LIKE  '%' || '11' || '%';
 
 
 
