@@ -81,9 +81,77 @@ BEGIN
 END;
 
 
+-------------------------------------------
+-- 가게 정보 --
+
+INSERT INTO "RESTAURANT"
+VALUES(
+	SEQ_RESTAURANT_NO,
+	"가게 이름",
+	"가게 주소",
+	"가게 전화 번호",
+	"이미지 1",
+	"이미지 2",
+	DEFAULT,
+	"지역 코드",
+	"카테고리 코드"
+)
+
+
+---
+
+-- SEQ_MENU_NO 시퀀스의 다음 값을 반환하는 함수 생성
+CREATE OR REPLACE FUNCTION NEXT_MENU_NO
+
+-- 반환형
+RETURN NUMBER
+
+-- 사용할 변수
+IS MENU_NO NUMBER;
+
+BEGIN 
+	SELECT SEQ_MENU_NO.NEXTVAL 
+	INTO MENU_NO
+	FROM DUAL;
+
+	RETURN MENU_NO;
+END;
+
+
+UPDATE "MEMBER"
+SET 
+	MEMBER_DEL_FL = 'Y'
+WHERE
+	MEMBER_NO = 2;
+
+UPDATE "MEMBER"
+SET 
+	MEMBER_AUTH = 1
+WHERE
+	MEMBER_NO = 3;
+
+
+
 
 ----------------------------------------------------------
 ----------------------------------------------------------
+SELECT
+	(SELECT COUNT(*)
+	 FROM "MEMBER"
+	 WHERE MEMBER_DEL_FL = 'N'
+	 AND   MEMBER_AUTH IN (0, 2)) AS "ACTIVE_MEMBER",
+	(SELECT COUNT(*)
+	 FROM "MEMBER") AS "TOTAL_MEMBER",	
+	(SELECT COUNT(*)
+	 FROM "MEMBER"
+	 WHERE MEMBER_AUTH = 1) AS "BLOCK_MEMBER",
+	(SELECT COUNT(*)
+	 FROM "MEMBER"
+	 WHERE MEMBER_DEL_FL = 'N') AS "SECESSION_MEMBER"
+FROM
+	DUAL;
+
+
 SELECT *
 FROM CATEGORY;
 
@@ -96,6 +164,17 @@ FROM "MEMBER";
 SELECT *
 FROM "BOARD";
 
+SELECT *
+FROM "RESTAURANT";
+
+SELECT 
+	SEQ_RESTAURANT_NO.NEXTVAL
+FROM 
+	DUAL;
+
+SELECT *
+FROM "MENU";
+
 SELECT 
 		CATEGORY_NO "categoryNo" ,
 		CATEGORY_NAME "categoryName"
@@ -104,3 +183,8 @@ FROM CATEGORY;
 COMMIT;
 
 ROLLBACK;
+
+
+
+	 
+	 
