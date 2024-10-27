@@ -231,6 +231,35 @@ JOIN
 
 
 
+
+SELECT 
+		  REPORT_REVIEW_NO,
+		  REPORT_TYPE_NAME,
+		  REPORT_REVIEW_DATE,
+		  REPORT_REVIEW_CONTENT,
+		  MEMBER_NAME,
+		  REVIEW_NO,
+		  REPORT_REVIEW_FL,
+		  R.MEMBER_NO AS "REVIEW_MEMBER_NO"
+		  
+FROM
+		  "REPORT_REVIEW"
+JOIN
+			"MEMBER" USING (MEMBER_NO)
+JOIN
+			"REPORT_TYPE" USING (REPORT_TYPE_NO)
+JOIN 
+			"REVIEW" R USING (REVIEW_NO)
+WHERE 
+	REPORT_REVIEW_NO = 4;
+  		
+
+COMMIT;
+
+UPDATE "REPORT_REVIEW"   
+SET REPORT_REVIEW_FEED = 'asdasdasasdasdsda'    
+WHERE REPORT_REVIEW_NO = 1;
+
 ----------------------------------------------------------
 ----------------------------------------------------------
 SELECT
@@ -249,6 +278,11 @@ SELECT
 FROM
 	DUAL;
 
+  		UPDATE "MEMBER"
+  		SET MEMBER_AUTH = 0
+  		WHERE MEMBER_NO = 4;
+
+COMMIT;
 
 SELECT 
 	COUNT(*)
